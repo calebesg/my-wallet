@@ -2,5 +2,6 @@ import styled from 'styled-components'
 
 export const Container = styled.main`
   grid-area: CT;
-  background-color: #1b1f38;
+  color: ${props => props.theme.colors.text};
+  background-color: ${props => props.theme.colors.primary};
 `
