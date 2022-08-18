@@ -1,8 +1,11 @@
+import ContentHeader from '../../components/ContentHeader'
+import { Container } from './styles'
+
 const Dashboard: React.FC = () => {
   return (
-    <div>
-      <h1>Dashboard</h1>
-    </div>
+    <Container>
+      <ContentHeader />
+    </Container>
   )
 }
 
