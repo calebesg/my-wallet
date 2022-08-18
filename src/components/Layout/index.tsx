@@ -1,14 +1,19 @@
+import { ReactElement } from 'react'
 import Aside from '../Aside'
 import Content from '../Content'
 import Header from '../Header'
 import { Container } from './styles'
 
-const Layout: React.FC = () => {
+interface LayoutProps {
+  children: ReactElement
+}
+
+const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <Container>
       <Header />
       <Aside />
-      <Content />
+      <Content>{children}</Content>
     </Container>
   )
 }
