@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const Container = styled.header`
   grid-area: MH;
-  color: ${props => props.theme.colors.text};
   background-color: ${props => props.theme.colors.secondary};
 
   display: flex;
@@ -16,6 +15,7 @@ export const Container = styled.header`
 export const Profile = styled.div`
   display: flex;
   flex-direction: column;
+  color: ${props => props.theme.colors.text};
 `
 
 export const Welcome = styled.span``
