@@ -1,11 +1,12 @@
+import { ReactElement } from 'react'
 import { Container } from './styles'
 
-const Content: React.FC = () => {
-  return (
-    <Container>
-      <h1>Content</h1>
-    </Container>
-  )
+interface ContentProps {
+  children: ReactElement
+}
+
+const Content: React.FC<ContentProps> = ({ children }) => {
+  return <Container>{children}</Container>
 }
 
 export default Content
