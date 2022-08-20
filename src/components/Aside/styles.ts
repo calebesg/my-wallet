@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 export const Container = styled.aside`
   grid-area: AS;
@@ -32,7 +33,7 @@ export const Menu = styled.nav`
   margin-top: 3rem;
 `
 
-export const MenuLink = styled.a`
+export const MenuLink = styled(Link)`
   text-decoration: none;
   color: ${props => props.theme.colors.info};
   transition: filter 0.1s ease-out;
