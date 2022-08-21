@@ -25,6 +25,7 @@ export const Filters = styled.div`
       content: '';
       display: block;
       width: 3.5rem;
+      border-radius: 2px;
       margin: 0 auto;
     }
 

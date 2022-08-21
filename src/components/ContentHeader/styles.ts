@@ -17,6 +17,7 @@ export const TitleContainer = styled.div<ITitleContainer>`
       display: block;
       border-bottom: 0.625rem solid ${props => props.lineColor};
       width: 3.5rem;
+      border-radius: 2px;
     }
   }
 `

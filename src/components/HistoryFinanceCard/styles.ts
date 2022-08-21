@@ -9,7 +9,7 @@ export const Container = styled.div`
   background-color: ${props => props.theme.colors.tertiary};
   padding: 0.75rem 0.625rem;
   margin: 0.625rem 0;
-  border-radius: 5px;
+  border-radius: 10px;
 
   display: flex;
   justify-content: space-between;
@@ -39,6 +39,8 @@ export const Tag = styled.div<ITagProps>`
   left: 0;
   width: 0.625rem;
   height: 2rem;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 
   background-color: ${props => props.color};
 `

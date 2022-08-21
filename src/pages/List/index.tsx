@@ -1,13 +1,28 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTheme } from 'styled-components'
 
 import ContentHeader from '../../components/ContentHeader'
 import HistoryFinanceCard from '../../components/HistoryFinanceCard'
 import SelectInput from '../../components/SelectInput'
+
+import formateCurrency from '../../shared/formateCurrency'
+import gains from '../../repositories/gains'
+import expenses from '../../repositories/expenses'
+
 import { Container, Content, Filters } from './styles'
 
+interface IData {
+  description: string
+  amountFormatted: string
+  frequency: string
+  dataFormatted: string
+  tagColor: string
+}
+
 const List: React.FC = () => {
+  const [data, setData] = useState<IData[]>([])
+
   const theme = useTheme()
   const params = useParams()
 
@@ -18,6 +33,10 @@ const List: React.FC = () => {
       ? { title: 'Entradas', lineColor: theme.colors.info }
       : { title: 'Saídas', lineColor: theme.colors.warning }
   }, [type, theme.colors])
+
+  const getData = useMemo(() => {
+    return type === 'entry-balance' ? gains : expenses
+  }, [type])
 
   const months = [
     { value: 1, label: 'Janeiro' },
@@ -34,6 +53,25 @@ const List: React.FC = () => {
     { value: 2019, label: 2019 },
     { value: 2018, label: 2018 },
   ]
+
+  useEffect(() => {
+    const response = getData.map(item => {
+      const tagColor =
+        item.frequency === 'recorrente'
+          ? theme.colors.success
+          : theme.colors.warning
+
+      return {
+        description: item.description,
+        amountFormatted: formateCurrency(Number(item.amount)),
+        frequency: item.frequency,
+        dataFormatted: new Date(item.date).toLocaleDateString('pt-BR'),
+        tagColor,
+      }
+    })
+
+    setData(response)
+  }, [getData])
 
   return (
     <Container>
@@ -55,12 +93,15 @@ const List: React.FC = () => {
       </Filters>
 
       <Content>
-        <HistoryFinanceCard
-          tagColor={theme.colors.warning}
-          amount="R$ 230,00"
-          title="Conta de Luz"
-          subtitle="19/08/2022"
-        />
+        {data.map((item, index) => (
+          <HistoryFinanceCard
+            key={index}
+            tagColor={item.tagColor}
+            amount={item.amountFormatted}
+            title={item.description}
+            subtitle={item.dataFormatted}
+          />
+        ))}
       </Content>
     </Container>
   )
