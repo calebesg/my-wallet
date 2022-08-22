@@ -30,11 +30,25 @@ export const Filters = styled.div`
     }
 
     &--recurrent::after {
-      border-bottom: 0.625rem solid ${props => props.theme.colors.success};
+      border-bottom: 0.625rem solid ${props => props.theme.colors.gray};
+      opacity: 0.2;
     }
 
     &--eventual::after {
-      border-bottom: 0.625rem solid ${props => props.theme.colors.warning};
+      border-bottom: 0.625rem solid ${props => props.theme.colors.gray};
+      opacity: 0.2;
+    }
+  }
+
+  .tag-activated.tag__filter {
+    &--recurrent::after {
+      border-color: ${props => props.theme.colors.success};
+      opacity: 1;
+    }
+
+    &--eventual::after {
+      border-color: ${props => props.theme.colors.warning};
+      opacity: 1;
     }
   }
 `
