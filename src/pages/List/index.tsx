@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTheme } from 'styled-components'
+import { v4 as uuidv4 } from 'uuid'
 
 import ContentHeader from '../../components/ContentHeader'
 import HistoryFinanceCard from '../../components/HistoryFinanceCard'
@@ -9,6 +10,7 @@ import SelectInput from '../../components/SelectInput'
 import formateCurrency from '../../shared/formateCurrency'
 import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
+import listOfMonths from '../../shared/months'
 
 import { Container, Content, Filters } from './styles'
 
@@ -20,7 +22,7 @@ interface IData {
   tagColor: string
 }
 
-const defaultYear = new Date().getFullYear()
+const defaultYear = 2020
 const defaultMonth = new Date().getMonth()
 
 const List: React.FC = () => {
@@ -43,31 +45,34 @@ const List: React.FC = () => {
     return type === 'entry-balance' ? gains : expenses
   }, [type])
 
-  const months = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'Março' },
-    { value: 4, label: 'Abril' },
-    { value: 5, label: 'Maio' },
-  ]
+  const months = useMemo(() => {
+    return listOfMonths.map((item, index) => ({
+      label: item,
+      value: index,
+    }))
+  }, [])
 
-  const years = [
-    { value: 2022, label: 2022 },
-    { value: 2021, label: 2021 },
-    { value: 2020, label: 2020 },
-    { value: 2019, label: 2019 },
-    { value: 2018, label: 2018 },
-  ]
+  const years = useMemo(() => {
+    const result = [
+      ...new Set(
+        getData.map(item => {
+          return new Date(item.date).getFullYear()
+        })
+      ),
+    ]
+
+    return result.map(item => ({ label: item, value: item }))
+  }, [getData])
 
   useEffect(() => {
-    console.log(selectedMonth)
+    console.log(selectedMonth, selectedYear)
     const filteredData = getData
       .filter(item => {
-        const data = new Date(item.date)
+        const date = new Date(item.date)
 
         return (
-          data.getMonth() + 1 === selectedMonth &&
-          data.getFullYear() === selectedYear
+          date.getMonth() === selectedMonth &&
+          date.getFullYear() === selectedYear
         )
       })
       .map(item => {
@@ -102,7 +107,7 @@ const List: React.FC = () => {
         <SelectInput
           options={years}
           onChange={e => setSelectedYear(+e.target.value)}
-          defaultValue={selectedYear}
+          defaultValue={defaultYear}
         />
       </ContentHeader>
 
@@ -116,9 +121,9 @@ const List: React.FC = () => {
       </Filters>
 
       <Content>
-        {data.map((item, index) => (
+        {data.map(item => (
           <HistoryFinanceCard
-            key={index}
+            key={uuidv4()}
             tagColor={item.tagColor}
             amount={item.amountFormatted}
             title={item.description}
