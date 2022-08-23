@@ -25,19 +25,34 @@ export const Filters = styled.div`
       content: '';
       display: block;
       width: 3.5rem;
+      border-radius: 2px;
       margin: 0 auto;
     }
 
     &--recurrent::after {
-      border-bottom: 0.625rem solid ${props => props.theme.colors.success};
+      border-bottom: 0.625rem solid ${props => props.theme.colors.gray};
+      opacity: 0.2;
     }
 
     &--eventual::after {
-      border-bottom: 0.625rem solid ${props => props.theme.colors.warning};
+      border-bottom: 0.625rem solid ${props => props.theme.colors.gray};
+      opacity: 0.2;
+    }
+  }
+
+  .tag-activated.tag__filter {
+    &--recurrent::after {
+      border-color: ${props => props.theme.colors.success};
+      opacity: 1;
+    }
+
+    &--eventual::after {
+      border-color: ${props => props.theme.colors.warning};
+      opacity: 1;
     }
   }
 `
 
-export const Content = styled.div`
+export const Content = styled.main`
   margin-top: 2rem;
 `
