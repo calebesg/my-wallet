@@ -10,9 +10,9 @@ import SelectInput from '../../components/SelectInput'
 import formateCurrency from '../../shared/formateCurrency'
 import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
-import listOfMonths from '../../shared/months'
 
 import { Container, Content, Filters } from './styles'
+import useFilter from '../useFilter'
 
 interface IData {
   description: string
@@ -22,8 +22,6 @@ interface IData {
   tagColor: string
 }
 
-const defaultYear = 2020
-const defaultMonth = new Date().getMonth()
 const frequency = {
   RECURRENT: 'recorrente',
   EVENTUAL: 'eventual',
@@ -31,8 +29,6 @@ const frequency = {
 
 const List: React.FC = () => {
   const [data, setData] = useState<IData[]>([])
-  const [selectedYear, setSelectedYear] = useState(defaultYear)
-  const [selectedMonth, setSelectMonth] = useState(defaultMonth)
   const [frequencyFilterSelected, setFrequencyFilterSelected] = useState([
     frequency.RECURRENT,
     frequency.EVENTUAL,
@@ -42,6 +38,15 @@ const List: React.FC = () => {
   const params = useParams()
 
   const { type: movementType } = params
+
+  const {
+    months,
+    selectedMonth,
+    selectedYear,
+    setSelectMonth,
+    setSelectedYear,
+    years,
+  } = useFilter(movementType === 'entry-balance' ? gains : expenses)
 
   const pageData = useMemo(() => {
     if (movementType === 'entry-balance') {
@@ -58,25 +63,6 @@ const List: React.FC = () => {
       movements: expenses,
     }
   }, [movementType, theme.colors.warning, theme.colors.info])
-
-  const months = useMemo(() => {
-    return listOfMonths.map((item, index) => ({
-      label: item,
-      value: index,
-    }))
-  }, [])
-
-  const years = useMemo(() => {
-    const result = [
-      ...new Set(
-        pageData.movements.map(item => {
-          return new Date(item.date).getFullYear()
-        })
-      ),
-    ]
-
-    return result.map(item => ({ label: item, value: item }))
-  }, [pageData])
 
   useEffect(() => {
     const filteredData = pageData.movements
@@ -140,7 +126,7 @@ const List: React.FC = () => {
         <SelectInput
           options={years}
           onChange={e => setSelectedYear(+e.target.value)}
-          defaultValue={defaultYear}
+          defaultValue={selectedYear}
         />
       </ContentHeader>
 
