@@ -5,11 +5,11 @@ import listOfMonths from '../shared/months'
 const defaultYear = 2020
 const defaultMonth = new Date().getMonth()
 
-interface IMovement {
+interface IDate {
   date: string
 }
 
-const useFilter = (movements: IMovement[]) => {
+const useDateFilter = (dates: IDate[]) => {
   const [selectedYear, setSelectedYear] = useState(defaultYear)
   const [selectedMonth, setSelectMonth] = useState(defaultMonth)
 
@@ -23,14 +23,14 @@ const useFilter = (movements: IMovement[]) => {
   const years = useMemo(() => {
     const result = [
       ...new Set(
-        movements.map(item => {
+        dates.map(item => {
           return new Date(item.date).getFullYear()
         })
       ),
     ]
 
     return result.map(item => ({ label: item, value: item }))
-  }, [movements])
+  }, [dates])
 
   return {
     selectedMonth,
@@ -42,4 +42,4 @@ const useFilter = (movements: IMovement[]) => {
   }
 }
 
-export default useFilter
+export default useDateFilter
