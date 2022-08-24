@@ -7,16 +7,17 @@ import useDateFilter from '../useDateFilter'
 import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
 
-import { Container } from './styles'
+import { Container, Content } from './styles'
+import WalletBox from '../../components/WalletBox'
 
 const Dashboard: React.FC = () => {
   const {
     months,
+    years,
     selectedMonth,
     selectedYear,
     setSelectMonth,
     setSelectedYear,
-    years,
   } = useDateFilter([...gains, ...expenses])
 
   const theme = useTheme()
@@ -35,6 +36,32 @@ const Dashboard: React.FC = () => {
           defaultValue={selectedYear}
         />
       </ContentHeader>
+
+      <Content>
+        <WalletBox
+          title="Saldo"
+          amount={150.0}
+          footerLabel="atualizado com base nas entradas e saídas"
+          icon="dollar"
+          bgColor={theme.colors.success}
+        />
+
+        <WalletBox
+          title="Entradas"
+          amount={5000.0}
+          footerLabel="atualizado com base nas entradas e saídas"
+          icon="arrowUp"
+          bgColor={theme.colors.info}
+        />
+
+        <WalletBox
+          title="Saídas"
+          amount={4850.0}
+          footerLabel="atualizado com base nas entradas e saídas"
+          icon="arrowDown"
+          bgColor={theme.colors.warning}
+        />
+      </Content>
     </Container>
   )
 }
