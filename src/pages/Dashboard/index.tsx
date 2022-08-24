@@ -2,13 +2,17 @@ import { useTheme } from 'styled-components'
 
 import ContentHeader from '../../components/ContentHeader'
 import SelectInput from '../../components/SelectInput'
+import WalletBox from '../../components/WalletBox'
+import MessageBox from '../../components/MessageBox'
 
 import useDateFilter from '../useDateFilter'
 import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
 
+import happyImg from '../../assets/happy.svg'
+import sadImg from '../../assets/sad.svg'
+
 import { Container, Content } from './styles'
-import WalletBox from '../../components/WalletBox'
 
 const Dashboard: React.FC = () => {
   const {
@@ -60,6 +64,20 @@ const Dashboard: React.FC = () => {
           footerLabel="atualizado com base nas entradas e saídas"
           icon="arrowDown"
           bgColor={theme.colors.warning}
+        />
+
+        <MessageBox
+          title="Muito Bem!"
+          description="Sua carteira está positiva!"
+          footerText="Continue assim. Considere investir o seu saldo"
+          icon={happyImg}
+        />
+
+        <MessageBox
+          title="Muito Bem!"
+          description="Sua carteira está positiva!"
+          footerText="Continue assim. Considere investir o seu saldo"
+          icon={sadImg}
         />
       </Content>
     </Container>
