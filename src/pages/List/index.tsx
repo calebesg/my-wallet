@@ -12,7 +12,7 @@ import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
 
 import { Container, Content, Filters } from './styles'
-import useFilter from '../useFilter'
+import useDateFilter from '../useDateFilter'
 
 interface IData {
   description: string
@@ -34,7 +34,6 @@ const List: React.FC = () => {
     frequency.EVENTUAL,
   ])
 
-  const theme = useTheme()
   const params = useParams()
 
   const { type: movementType } = params
@@ -46,7 +45,9 @@ const List: React.FC = () => {
     setSelectMonth,
     setSelectedYear,
     years,
-  } = useFilter(movementType === 'entry-balance' ? gains : expenses)
+  } = useDateFilter(movementType === 'entry-balance' ? gains : expenses)
+
+  const theme = useTheme()
 
   const pageData = useMemo(() => {
     if (movementType === 'entry-balance') {
