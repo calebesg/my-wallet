@@ -17,6 +17,8 @@ import grinningImg from '../../assets/grinning.svg'
 import { Container, Content } from './styles'
 import { useMemo } from 'react'
 import PieChartBox from '../../components/PieChartBox'
+import HistoryBox from '../../components/HistoryBox'
+import listOfMonths from '../../shared/months'
 
 const Dashboard: React.FC = () => {
   const {
@@ -91,6 +93,53 @@ const Dashboard: React.FC = () => {
     ]
   }, [totalGains, totalExpenses, theme.colors.info, theme.colors.warning])
 
+  const historyData = useMemo(() => {
+    return listOfMonths
+      .map((_, month) => {
+        const amountEntry = gains.reduce((total, current) => {
+          const date = new Date(current.date)
+
+          if (
+            date.getMonth() === month &&
+            date.getFullYear() === selectedYear
+          ) {
+            return total + Number(current.amount)
+          }
+
+          return total
+        }, 0)
+
+        const amountOutput = expenses.reduce((total, current) => {
+          const date = new Date(current.date)
+
+          if (
+            date.getMonth() === month &&
+            date.getFullYear() === selectedYear
+          ) {
+            return total + Number(current.amount)
+          }
+
+          return total
+        }, 0)
+
+        return {
+          monthNumber: month,
+          month: listOfMonths[month].substring(0, 3),
+          amountEntry,
+          amountOutput,
+        }
+      })
+      .filter(item => {
+        const currentDate = new Date()
+
+        return (
+          (selectedYear === currentDate.getFullYear() &&
+            item.monthNumber <= currentDate.getMonth()) ||
+          selectedYear < currentDate.getFullYear()
+        )
+      })
+  }, [selectedYear])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor={theme.colors.success}>
@@ -139,6 +188,12 @@ const Dashboard: React.FC = () => {
         />
 
         <PieChartBox data={relationBetweenGainsAndExpenses} />
+
+        <HistoryBox
+          data={historyData}
+          lineColorEntry={theme.colors.info}
+          lineColorOutput={theme.colors.warning}
+        />
       </Content>
     </Container>
   )
