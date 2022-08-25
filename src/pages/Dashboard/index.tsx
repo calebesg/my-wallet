@@ -16,6 +16,7 @@ import grinningImg from '../../assets/grinning.svg'
 
 import { Container, Content } from './styles'
 import { useMemo } from 'react'
+import PieChartBox from '../../components/PieChartBox'
 
 const Dashboard: React.FC = () => {
   const {
@@ -115,12 +116,7 @@ const Dashboard: React.FC = () => {
           icon={resumeMonth.icon}
         />
 
-        <MessageBox
-          title="Muito Bem!"
-          description="Sua carteira está positiva!"
-          footerText="Continue assim. Considere investir o seu saldo"
-          icon={sadImg}
-        />
+        <PieChartBox />
       </Content>
     </Container>
   )

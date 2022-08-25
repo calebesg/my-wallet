@@ -5,6 +5,7 @@ export const Container = styled.div`
   border-radius: 0.625rem;
   color: ${props => props.theme.colors.text};
   display: flex;
+  width: 48%;
   flex: 1 1 auto;
   flex-direction: column;
   height: 260px;
