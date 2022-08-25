@@ -47,13 +47,16 @@ export const Legend = styled.li<ILegendProps>`
 
   > div {
     background-color: ${props => props.bgColor};
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 6px;
-    font-size: 1.125rem;
-    line-height: 2.5rem;
+    font-size: 1rem;
+    line-height: 3rem;
     text-align: center;
   }
 `
 
-export const SideRight = styled.main``
+export const SideRight = styled.main`
+  display: flex;
+  flex: 1;
+`
