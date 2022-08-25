@@ -69,6 +69,28 @@ const Dashboard: React.FC = () => {
     }
   }, [balance])
 
+  const relationBetweenGainsAndExpenses = useMemo(() => {
+    const total = totalGains + totalExpenses
+
+    const percentExpenses = (totalExpenses / total) * 100
+    const percentGains = (totalGains / total) * 100
+
+    return [
+      {
+        title: 'Entradas',
+        value: totalGains,
+        percent: percentGains,
+        color: theme.colors.info,
+      },
+      {
+        title: 'Saídas',
+        value: totalExpenses,
+        percent: percentExpenses,
+        color: theme.colors.warning,
+      },
+    ]
+  }, [totalGains, totalExpenses, theme.colors.info, theme.colors.warning])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor={theme.colors.success}>
@@ -116,7 +138,7 @@ const Dashboard: React.FC = () => {
           icon={resumeMonth.icon}
         />
 
-        <PieChartBox />
+        <PieChartBox data={relationBetweenGainsAndExpenses} />
       </Content>
     </Container>
   )

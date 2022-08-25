@@ -1,5 +1,4 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
-import { useTheme } from 'styled-components'
 
 import {
   Container,
@@ -9,47 +8,40 @@ import {
   SideRight,
 } from './styles'
 
-const PieChartBox: React.FC = () => {
-  const theme = useTheme()
+interface IPieChartBoxProps {
+  data: {
+    title: string
+    value: number
+    percent: number
+    color: string
+  }[]
+}
 
+const PieChartBox: React.FC<IPieChartBoxProps> = ({ data }) => {
   return (
     <Container>
       <SideLeft>
         <h2>Resultado</h2>
         <LegendContainer>
-          <Legend bgColor={theme.colors.info}>
-            <div>5%</div>
-            <span>Entradas</span>
-          </Legend>
-          <Legend bgColor={theme.colors.warning}>
-            <div>95%</div>
-            <span>Saídas</span>
-          </Legend>
-          <Legend bgColor={theme.colors.info}>
-            <div>5%</div>
-            <span>Entradas</span>
-          </Legend>
-          <Legend bgColor={theme.colors.warning}>
-            <div>95%</div>
-            <span>Saídas</span>
-          </Legend>
-          <Legend bgColor={theme.colors.info}>
-            <div>5%</div>
-            <span>Entradas</span>
-          </Legend>
-          <Legend bgColor={theme.colors.warning}>
-            <div>95%</div>
-            <span>Saídas</span>
-          </Legend>
+          {data.map(item => (
+            <Legend key={item.title} bgColor={item.color}>
+              <div>{item.percent.toFixed(1)}%</div>
+              <span>{item.title}</span>
+            </Legend>
+          ))}
         </LegendContainer>
       </SideLeft>
 
       <SideRight>
-        {/* <ResponsiveContainer>
+        <ResponsiveContainer>
           <PieChart>
-            <Pie />
+            <Pie data={data} dataKey="percent">
+              {data.map(item => (
+                <Cell key={item.title} fill={item.color} />
+              ))}
+            </Pie>
           </PieChart>
-        </ResponsiveContainer> */}
+        </ResponsiveContainer>
       </SideRight>
     </Container>
   )
