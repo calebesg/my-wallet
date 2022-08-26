@@ -1,6 +1,8 @@
 import { Container, Toggle, ToggleLabel } from './styles'
 
 interface ToggleThemeProps {
+  labelLeft: string
+  labelRight: string
   checked: boolean
   onChange: () => void
 }
