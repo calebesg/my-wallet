@@ -19,6 +19,7 @@ import { useMemo } from 'react'
 import PieChartBox from '../../components/PieChartBox'
 import HistoryBox from '../../components/HistoryBox'
 import listOfMonths from '../../shared/months'
+import BarChartBox from '../../components/BarChartBox'
 
 const Dashboard: React.FC = () => {
   const {
@@ -54,6 +55,13 @@ const Dashboard: React.FC = () => {
           'Verifique seus gastos e tente cortar algumas coisas desnecessárias.',
         icon: sadImg,
       }
+    } else if (totalExpenses === 0 && totalGains === 0) {
+      return {
+        title: 'Ops!',
+        description: 'Este mês ainda não possui registros.',
+        footerText: 'Mantenha seus registros em dia',
+        icon: grinningImg,
+      }
     } else if (balance === 0) {
       return {
         title: 'Ufaa!',
@@ -69,7 +77,7 @@ const Dashboard: React.FC = () => {
       footerText: 'Continue assim. Considere investir o seu saldo',
       icon: happyImg,
     }
-  }, [balance])
+  }, [balance, totalExpenses, totalGains])
 
   const relationBetweenGainsAndExpenses = useMemo(() => {
     const total = totalGains + totalExpenses
@@ -81,13 +89,13 @@ const Dashboard: React.FC = () => {
       {
         title: 'Entradas',
         value: totalGains,
-        percent: percentGains,
+        percent: percentGains || 0,
         color: theme.colors.info,
       },
       {
         title: 'Saídas',
         value: totalExpenses,
-        percent: percentExpenses,
+        percent: percentExpenses || 0,
         color: theme.colors.warning,
       },
     ]
@@ -139,6 +147,94 @@ const Dashboard: React.FC = () => {
         )
       })
   }, [selectedYear])
+
+  const percentExpensesRecurrentAndEventual = useMemo(() => {
+    const { eventual, recurrent } = expenses.reduce(
+      (amount, current) => {
+        const date = new Date(current.date)
+        const [month, year] = [date.getMonth(), date.getFullYear()]
+
+        if (month !== selectedMonth || year !== selectedYear) {
+          return amount
+        }
+
+        if (current.frequency === 'recorrente') {
+          amount.recurrent += Number(current.amount)
+          return amount
+        }
+
+        amount.eventual += Number(current.amount)
+        return amount
+      },
+      {
+        recurrent: 0,
+        eventual: 0,
+      }
+    )
+
+    const total = eventual + recurrent
+    const percentEventual = (eventual / total) * 100
+    const percentRecurrent = (recurrent / total) * 100
+
+    return [
+      {
+        title: 'Recorrentes',
+        amount: recurrent,
+        percent: percentRecurrent || 0,
+        color: theme.colors.info,
+      },
+      {
+        title: 'Eventuais',
+        amount: eventual,
+        percent: percentEventual || 0,
+        color: theme.colors.warning,
+      },
+    ]
+  }, [selectedMonth, selectedYear, theme.colors.info, theme.colors.warning])
+
+  const percentGainsRecurrentAndEventual = useMemo(() => {
+    const { eventual, recurrent } = gains.reduce(
+      (amount, current) => {
+        const date = new Date(current.date)
+        const [month, year] = [date.getMonth(), date.getFullYear()]
+
+        if (month !== selectedMonth || year !== selectedYear) {
+          return amount
+        }
+
+        if (current.frequency === 'recorrente') {
+          amount.recurrent += Number(current.amount)
+          return amount
+        }
+
+        amount.eventual += Number(current.amount)
+        return amount
+      },
+      {
+        recurrent: 0,
+        eventual: 0,
+      }
+    )
+
+    const total = eventual + recurrent
+    const percentEventual = (eventual / total) * 100
+    const percentRecurrent = (recurrent / total) * 100
+
+    return [
+      {
+        title: 'Recorrentes',
+        amount: recurrent,
+        percent: percentRecurrent || 0,
+        color: theme.colors.info,
+      },
+      {
+        title: 'Eventuais',
+        amount: eventual,
+        percent: percentEventual || 0,
+        color: theme.colors.warning,
+      },
+    ]
+  }, [selectedMonth, selectedYear, theme.colors.info, theme.colors.warning])
 
   return (
     <Container>
@@ -194,6 +290,12 @@ const Dashboard: React.FC = () => {
           lineColorEntry={theme.colors.info}
           lineColorOutput={theme.colors.warning}
         />
+
+        <BarChartBox
+          title="Saídas"
+          data={percentExpensesRecurrentAndEventual}
+        />
+        <BarChartBox title="Entradas" data={percentGainsRecurrentAndEventual} />
       </Content>
     </Container>
   )
