@@ -34,12 +34,14 @@ const SignIn: React.FC = () => {
           value={email}
           onChange={e => setEmail(e.target.value)}
           type="email"
+          placeholder="Enter a email"
           required
         />
         <Input
           value={password}
           onChange={e => setPassword(e.target.value)}
           type="password"
+          placeholder="Enter a password"
           required
         />
 

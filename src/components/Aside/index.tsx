@@ -6,9 +6,12 @@ import {
 } from 'react-icons/md'
 
 import logo from '../../assets/logo.svg'
+import { useAuth } from '../../hooks/auth'
 import { Container, Header, LogoImg, Title, Menu, MenuLink } from './styles'
 
 const Aside: React.FC = () => {
+  const { signOut } = useAuth()
+
   return (
     <Container>
       <Header>
@@ -29,7 +32,7 @@ const Aside: React.FC = () => {
           <MdArrowDownward size={18} />
           Saídas
         </MenuLink>
-        <MenuLink to="/">
+        <MenuLink to="/" onClick={signOut}>
           <MdExitToApp size={18} />
           Sair
         </MenuLink>
