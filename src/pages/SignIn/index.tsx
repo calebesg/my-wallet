@@ -1,13 +1,23 @@
-import { FormEvent } from 'react'
-import logoImg from '../../assets/logo.svg'
+import { FormEvent, useState } from 'react'
+
 import Button from '../../components/Button'
 import Input from '../../components/Input'
+
+import { useAuth } from '../../hooks/auth'
+
+import logoImg from '../../assets/logo.svg'
 
 import { Container, Logo, Form } from './styles'
 
 const SignIn: React.FC = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const { signIn } = useAuth()
+
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
+    signIn(email, password)
   }
 
   return (
@@ -20,8 +30,18 @@ const SignIn: React.FC = () => {
       <Form onSubmit={handleSubmit}>
         <h2>Entrar</h2>
 
-        <Input type="email" required />
-        <Input type="password" required />
+        <Input
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          type="email"
+          required
+        />
+        <Input
+          value={password}
+          onChange={e => setPassword(e.target.value)}
+          type="password"
+          required
+        />
 
         <Button type="submit">Acessar</Button>
       </Form>
