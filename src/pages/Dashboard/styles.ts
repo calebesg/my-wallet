@@ -7,4 +7,8 @@ export const Content = styled.main`
   flex-wrap: wrap;
   gap: 2rem;
   padding: 2rem 0;
+
+  @media (max-width: 900px) {
+    gap: 1rem;
+  }
 `

@@ -36,13 +36,8 @@ const WalletBox: React.FC<IWalletBoxProps> = ({
     <Container bgColor={bgColor}>
       <h2>{title}</h2>
       <span>
-        <CountUp
-          end={amount}
-          prefix="R$ "
-          separator="."
-          decimal=","
-          decimals={2}
-        />
+        <strong>R$ </strong>
+        <CountUp end={amount} separator="." decimal="," decimals={2} />
       </span>
       <small>{footerLabel}</small>
       <img src={iconSelected()} alt={icon} />

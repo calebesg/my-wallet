@@ -13,6 +13,10 @@ export const Container = styled.div`
   flex: 1 1 auto;
   height: 260px;
   padding: 1.8rem 1rem;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `
 
 export const SideLeft = styled.aside`
@@ -59,4 +63,5 @@ export const Legend = styled.li<ILegendProps>`
 export const SideRight = styled.main`
   display: flex;
   flex: 1;
+  width: 50%;
 `
