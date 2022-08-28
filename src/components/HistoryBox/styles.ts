@@ -11,6 +11,11 @@ export const Container = styled.div`
   padding: 2rem 1rem 3rem;
   height: 340px;
   width: 100%;
+
+  @media (max-width: 900px) {
+    height: 400px;
+    padding-bottom: 6rem;
+  }
 `
 
 export const Header = styled.header`
@@ -19,6 +24,12 @@ export const Header = styled.header`
   justify-content: space-between;
   margin-bottom: 1rem;
   padding: 0 0.75rem;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
 `
 
 export const LegendContainer = styled.ul`
@@ -37,5 +48,12 @@ export const Legend = styled.li<ILegendProps>`
     width: 2rem;
     height: 2rem;
     border-radius: 6px;
+  }
+
+  @media (max-width: 600px) {
+    > div {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
   }
 `

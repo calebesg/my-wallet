@@ -13,6 +13,13 @@ export const Container = styled.div`
   width: 48%;
   flex: 1 1 auto;
   display: flex;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    height: auto;
+    flex-direction: column;
+    gap: 4rem;
+  }
 `
 
 export const SideLeft = styled.aside`

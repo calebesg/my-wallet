@@ -9,6 +9,7 @@ export const Container = styled.div<IContainerProps>`
   border-radius: 0.625rem;
   color: ${props => props.theme.colors.text};
   display: flex;
+  width: 30%;
   flex: 1 1 auto;
   flex-direction: column;
   height: 150px;
@@ -32,9 +33,27 @@ export const Container = styled.div<IContainerProps>`
   > span {
     font-size: 1.5rem;
     font-weight: 500;
+
+    > strong {
+      font-weight: normal;
+    }
   }
 
   > small {
     margin-top: auto;
+  }
+
+  @media (max-width: 900px) {
+    > span {
+      font-size: 1.25rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+
+    > span {
+      font-size: 1.5rem;
+    }
   }
 `

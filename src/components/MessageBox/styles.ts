@@ -26,4 +26,23 @@ export const Container = styled.div`
       font-size: 1.125rem;
     }
   }
+
+  @media (max-width: 900px) {
+    width: 100%;
+
+    > header {
+      h3 {
+        font-size: 1.5rem;
+      }
+
+      img {
+        width: 1.5rem;
+        margin-left: 0.5rem;
+      }
+
+      p {
+        font-size: 1.125rem;
+      }
+    }
+  }
 `

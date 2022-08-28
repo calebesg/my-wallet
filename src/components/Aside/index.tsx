@@ -1,20 +1,43 @@
+import { useState } from 'react'
 import {
   MdDashboard,
   MdArrowDownward,
   MdArrowUpward,
   MdExitToApp,
+  MdMenu,
+  MdClose,
 } from 'react-icons/md'
 
-import logo from '../../assets/logo.svg'
 import { useAuth } from '../../hooks/auth'
-import { Container, Header, LogoImg, Title, Menu, MenuLink } from './styles'
+import { useTheme } from '../../hooks/theme'
+
+import ToggleTheme from '../ToggleTheme'
+
+import logo from '../../assets/logo.svg'
+
+import {
+  Container,
+  Header,
+  MenuButton,
+  LogoImg,
+  Title,
+  Menu,
+  MenuLink,
+  Footer,
+} from './styles'
 
 const Aside: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const { signOut } = useAuth()
+  const { theme, toggleTheme } = useTheme()
 
   return (
-    <Container>
+    <Container isOpen={isOpen}>
       <Header>
+        <MenuButton onClick={() => setIsOpen(!isOpen)}>
+          {isOpen ? <MdClose /> : <MdMenu />}
+        </MenuButton>
         <LogoImg src={logo} alt="Logo Minha carteira" />
         <Title>Minha Carteira</Title>
       </Header>
@@ -37,6 +60,15 @@ const Aside: React.FC = () => {
           Sair
         </MenuLink>
       </Menu>
+
+      <Footer>
+        <ToggleTheme
+          labelLeft="light"
+          labelRight="dark"
+          checked={theme.title === 'dark'}
+          onChange={() => toggleTheme()}
+        />
+      </Footer>
     </Container>
   )
 }

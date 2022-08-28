@@ -6,4 +6,11 @@ export const Container = styled.div`
   grid-template-rows: 70px auto;
   grid-template-areas: 'AS MH' 'AS CT';
   height: 100vh;
+
+  min-width: 346px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 100% auto;
+    grid-template-areas: 'MH' 'CT';
+  }
 `
