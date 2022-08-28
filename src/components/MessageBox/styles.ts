@@ -1,6 +1,20 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const animation = keyframes`
+  from {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`
 
 export const Container = styled.div`
+  animation: ${animation} 0.3s ease-out;
+
   background-color: ${props => props.theme.colors.tertiary};
   border-radius: 0.625rem;
   color: ${props => props.theme.colors.text};

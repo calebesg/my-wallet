@@ -7,6 +7,7 @@ export const Container = styled.main`
   padding: 1rem;
 
   height: calc(100vh - 70px);
+  overflow-x: hidden;
   overflow-y: scroll;
 
   ::-webkit-scrollbar {

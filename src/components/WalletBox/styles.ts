@@ -1,10 +1,24 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 interface IContainerProps {
   bgColor: string
 }
 
+const animation = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+`
+
 export const Container = styled.div<IContainerProps>`
+  animation: ${animation} 0.3s ease-out;
+
   background-color: ${props => props.bgColor};
   border-radius: 0.625rem;
   color: ${props => props.theme.colors.text};
