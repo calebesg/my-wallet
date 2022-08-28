@@ -20,6 +20,12 @@ export const TitleContainer = styled.div<ITitleContainer>`
       border-radius: 2px;
     }
   }
+
+  @media (max-width: 600px) {
+    > h1 {
+      font-size: 1.5rem;
+    }
+  }
 `
 
 export const Controllers = styled.div`
