@@ -1,4 +1,4 @@
-export default [
+const expenses = [
   {
     description: 'Energia elétrica',
     amount: '150.55',
@@ -350,3 +350,5 @@ export default [
     date: '2022-07-19',
   },
 ]
+
+export default expenses

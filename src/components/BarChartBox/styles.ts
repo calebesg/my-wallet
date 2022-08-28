@@ -30,7 +30,7 @@ export const Container = styled.div`
 
   @media (max-width: 900px) {
     width: 100%;
-    height: auto;
+    height: 500px;
     flex-direction: column;
     gap: 4rem;
   }
