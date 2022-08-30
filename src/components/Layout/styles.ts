@@ -7,7 +7,7 @@ export const Container = styled.div`
   grid-template-areas: 'AS MH' 'AS CT';
   height: 100vh;
 
-  min-width: 346px;
+  min-width: 310px;
 
   @media (max-width: 600px) {
     grid-template-columns: 100% auto;
